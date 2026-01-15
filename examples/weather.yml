@@ -1,0 +1,86 @@
+flower: "0.1"
+id: weather
+title: Get the weather for a specific city
+
+flows:
+  - id: weather_current
+    description: Get the current weather for a specific city
+    inputs:
+      properties:
+        city:
+          type: string
+      required:
+        - city
+
+    steps:
+      - id: get_lat_lon
+        request:
+          method: GET
+          url: https://nominatim.openstreetmap.org/search
+          query:
+            q: $inputs.city
+            format: jsonv2
+        outputs:
+          lat: $response.body.0.lat
+          lon: $response.body.0.lon
+
+      - id: get_weather_current
+        request:
+          method: GET
+          url: https://api.open-meteo.com/v1/forecast
+          query:
+            latitude: $steps.get_lat_lon.outputs.lat
+            longitude: $steps.get_lat_lon.outputs.lon
+            current: temperature_2m,is_day,wind_speed_10m,rain,showers,snowfall
+            timezone: Europe/Berlin
+        outputs:
+          temperature: $response.body.current.temperature_2m $response.body.current_units.temperature_2m
+          rain: $response.body.current.rain
+          snowfall: $response.body.current.snowfall
+
+    outputs:
+      temperature: $steps.get_weather_current.outputs.temperature
+      rain: $steps.get_weather_current.outputs.rain
+      snowfall: $steps.get_weather_current.outputs.snowfall
+
+  - id: weather_forecast
+    description: Get the weather forecast for a specific city
+    inputs:
+      properties:
+        city:
+          type: string
+      required:
+        - city
+
+    steps:
+      - id: get_lat_lon
+        request:
+          method: GET
+          url: https://nominatim.openstreetmap.org/search
+          query:
+            q: $inputs.city
+            format: jsonv2
+        outputs:
+          lat: $response.body.0.lat
+          lon: $response.body.0.lon
+
+      - id: get_weather_forecast
+        request:
+          method: GET
+          url: https://api.open-meteo.com/v1/forecast
+          query:
+            latitude: $steps.get_lat_lon.outputs.lat
+            longitude: $steps.get_lat_lon.outputs.lon
+            daily: rain_sum,snowfall_sum,temperature_2m_min,temperature_2m_max
+            timezone: Europe/Berlin
+        outputs:
+          temperature_min: $response.body.daily.temperature_2m_min
+          temperature_max: $response.body.daily.temperature_2m_max
+          rain: $response.body.daily.rain_sum
+          snowfall: $response.body.daily.snowfall_sum
+
+    outputs:
+      temperature_min: $steps.get_weather_forecast.outputs.temperature_min
+      temperature_max: $steps.get_weather_forecast.outputs.temperature_max
+      rain: $steps.get_weather_forecast.outputs.rain
+      snowfall: $steps.get_weather_forecast.outputs.snowfall

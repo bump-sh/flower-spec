@@ -1,0 +1,13 @@
+module Flower
+  class Validator
+    SCHEMA: untyped
+
+    def initialize: () -> void
+
+    def valid?: (String | Hash input, ?parse: bool) -> bool
+
+    def pretty_errors: () -> Array[String]
+
+    def raw_errors: () -> Array[String]
+  end
+end

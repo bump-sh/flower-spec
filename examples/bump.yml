@@ -1,0 +1,48 @@
+flower: "0.1"
+id: bump
+title: Bump.sh main features
+description: >
+  This flow allows you to use Bump.sh API public endpoints.
+
+flows:
+  - id: diff
+    description: Get a diff between 2 API contracts
+    inputs:
+      properties:
+        left_url:
+          type: string
+          description: First API contract URL
+        right_url:
+          type: string
+          description: Second API contract URL
+      required:
+        - left_url
+        - right_url
+
+    steps:
+      - id: create_diff
+        request:
+          method: POST
+          url: https://bump.sh/api/v1/diffs
+          body:
+            previous_url: "$inputs.left_url"
+            url: "$inputs.right_url"
+        outputs:
+          id: $response.body.id
+
+      - id: get_diff
+        request:
+          method: GET
+          url: https://bump.sh/api/v1/diffs/$steps.create_diff.outputs.id
+        outputs:
+          result: $response.body.markdown
+          breaking: $response.body.breaking
+        actions:
+          - when: "$statusCode == 202"
+            do: retry
+            wait: 2
+          - do: next
+
+    outputs:
+      breaking: $steps.get_diff.outputs.breaking
+      result: $steps.get_diff.outputs.result
