@@ -4,7 +4,9 @@ require "open-uri"
 
 module Flower
   class Validator
-    SCHEMA = JSON.parse(File.read("specification/v0/schema.json")).freeze
+    GEM_ROOT = File.expand_path("../../..", __FILE__)
+    SPEC_PATH = "specification/v0/schema.json"
+    SCHEMA = JSON.parse(File.read("#{GEM_ROOT}/#{SPEC_PATH}")).freeze
 
     def initialize
       @validator = JSONSchemer.schema(
