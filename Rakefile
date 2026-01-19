@@ -7,6 +7,9 @@ RSpec::Core::RakeTask.new(:spec)
 
 require "standard/rake"
 
+# “build” extensions when developping locally
+require_relative "ext/http/extconf"
+
 # Load locally defined tasks
 Dir["lib/tasks/**/*.rake"].each { |ext| load ext } if defined?(Rake)
 
