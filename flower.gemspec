@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
     end
   end
   spec.bindir = "exe"
+  spec.extensions << "ext/http/extconf.rb"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
