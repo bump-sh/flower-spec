@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
     end
   end
   spec.bindir = "exe"
-  spec.extensions << "ext/http/extconf.rb"
+  spec.extensions << "ext/http/Rakefile"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "json_schemer"
+  spec.add_dependency "json_schemer", ">= 2.0.0", "< 3.0.0"
 end
