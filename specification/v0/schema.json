@@ -88,11 +88,118 @@
               "type": "string"
             }
           }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {"$ref": "#/definitions/next"},
+              {"$ref": "#/definitions/retry"},
+              {"$ref": "#/definitions/goto"},
+              {"$ref": "#/definitions/end"}
+            ]
+          }
         }
       },
       "required": [
         "id",
         "request"
+      ]
+    },
+    "action": {
+      "type": "object",
+      "required": ["do"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "when": {
+          "type": "string",
+          "description": "A runtime expression conditioning this action"
+        },
+        "do": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "do",
+        "mapping": {
+          "next": "#/definitions/next",
+          "retry": "#/definitions/retry",
+          "goto": "#/definitions/goto",
+          "end": "#/definitions/end"
+        }
+      }
+    },
+    "next": {
+      "allOf": [
+        { "$ref": "#/definitions/action" },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "type": "string",
+              "const": "next"
+            }
+          }
+        }
+      ]
+    },
+    "retry": {
+      "allOf": [
+        { "$ref": "#/definitions/action" },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "type": "string",
+              "const": "retry"
+            },
+            "wait": {
+              "type": "integer",
+              "description": "Number of seconds to wait",
+              "default": 5
+            },
+            "max_retry": {
+              "type": "integer",
+              "description": "Maximum number of subsequent retries to execute",
+              "default": 5
+            }
+          }
+        }
+      ]
+    },
+    "goto": {
+      "allOf": [
+        { "$ref": "#/definitions/action" },
+        {
+          "type": "object",
+          "required": ["step"],
+          "properties": {
+            "do": {
+              "type": "string",
+              "const": "goto"
+            },
+            "step": {
+              "type": "string",
+              "description": "The target step ID to jump to"
+            }
+          }
+        }
+      ]
+    },
+    "end": {
+      "allOf": [
+        { "$ref": "#/definitions/action" },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "type": "string",
+              "const": "end"
+            }
+          }
+        }
       ]
     },
     "schema": {
