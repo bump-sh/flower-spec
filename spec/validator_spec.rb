@@ -3,15 +3,19 @@
 RSpec.describe Flower::Validator do
   describe "#valid?" do
     it "validates a valid input file" do
-      definition = File.read("examples/bump.yml")
+      Dir["examples/*.yml"].each do |filepath|
+        definition = File.read(filepath)
 
-      expect(subject.valid?(definition)).to be(true)
+        expect(subject.valid?(definition)).to be(true)
+      end
     end
 
     it "validates an invalid input file" do
-      definition = File.read("examples/invalid/test.yml")
+      Dir["examples/invalid/*.yml"].each do |filepath|
+        definition = File.read(filepath)
 
-      expect(subject.valid?(definition)).to be(false)
+        expect(subject.valid?(definition)).to be(false)
+      end
     end
 
     it "validates an already parsed definition" do
@@ -38,6 +42,16 @@ RSpec.describe Flower::Validator do
 
       expect(subject.pretty_errors).to include("property '/flower' is not one of: [\"0.1\"]")
       expect(subject.pretty_errors).to include("root is missing required keys: id")
+    end
+
+    it "returns a list of prettyfied errors when an invalid action has been checked" do
+      definition = File.read("examples/invalid/actions.yml")
+
+      subject.valid?(definition)
+
+      ["next", "goto", "end", "retry"].each do |action_type|
+        expect(subject.pretty_errors).to include("property '/flows/0/steps/0/actions/0/do' is not: \"#{action_type}\"")
+      end
     end
   end
 end
