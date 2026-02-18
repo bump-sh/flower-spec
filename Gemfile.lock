@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    flower-spec (0.2.0)
+    flower-spec (0.2.1)
       json_schemer (>= 2.0.0, < 3.0.0)
 
 GEM
