@@ -14,7 +14,6 @@ module Flower
     def initialize
       @validator = JSONSchemer.schema(
         SCHEMA,
-        insert_property_defaults: true,
         ref_resolver: {
           URI("http://json-schema.org/draft-07/schema") => JSON_SCHEMA
         }.to_proc
