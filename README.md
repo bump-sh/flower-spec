@@ -1,7 +1,7 @@
 # Flower specification
 
 The _Flower_ specification is published by [Bump.sh](https://bump.sh)
-and built to simplify defining API workflows. 
+and built to simplify defining API workflows.
 
 The specification is currently only used internally @bump.sh, fully
 inspired by [Arazzo](https://spec.openapis.org/arazzo/latest.html) but
@@ -12,6 +12,27 @@ files.
 You can find the current version of the specification JSON Schema at:
 - ..No published HTML page for now...
 - [`specification/v0/schema.json`](specification/v0/schema.json)
+
+## Notable _benefits_ compared to Arazzo
+
+- Flower takes a “no dependency” approach by not knowing about
+  OpenAPI. It needs the API urls and methods declared in a flower
+  definition directly.
+- Arazzo's `successCriteria` / `onFailure` / `onSuccess` are
+  simplified in a single list of `actions`. Each `action` object lets
+  you chose between `next` (go to next step), `retry` (retry current
+  step), `goto` (go to a previous or a future step) and `end` actions
+  conditionally based on their optional `condition` runtime
+  expression. By default Flower specifies a `next` action when no
+  actions are declared within a step.
+
+## Notable _limitations_ compared to Arazzo
+
+- Arazzo's **`step.parameters[in=path|cookie]`** do not have a Flower
+  equivalent yet.
+- Flower does not support referenced workflows within a **`step`** (or
+  **`action`**) yet. Meaning you can't use a whole defined workflow
+  within a `step` of another workflow.
 
 ## Ruby library
 

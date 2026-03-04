@@ -103,7 +103,8 @@
               {"$ref": "#/definitions/goto"},
               {"$ref": "#/definitions/end"}
             ]
-          }
+          },
+          "default": [{"do": "next"}]
         }
       },
       "required": [
