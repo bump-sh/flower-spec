@@ -90,10 +90,9 @@
             "query": {
               "$ref": "#/definitions/expressionMap"
             },
-            "body": {
-              "$ref": "#/definitions/expressionMap"
-            }
-          }
+            "body": true
+          },
+          "additionalProperties": false
         },
         "actions": {
           "type": "array",
