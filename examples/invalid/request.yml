@@ -1,0 +1,18 @@
+flower: "0.1"
+id: invalid
+title: with invalid requests
+flows:
+  - id: invalid
+    description: Invalid flow
+    inputs:
+      properties:
+        myInput:
+          type: string
+    steps:
+      - id: invalid
+        request:
+          method: GET
+          url: https://example.org/api/v1/invalid
+          body:
+            myInput: "$inputs.myInput"
+          whatever: hello

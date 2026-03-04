@@ -90,10 +90,9 @@
             "query": {
               "$ref": "#/definitions/expressionMap"
             },
-            "body": {
-              "$ref": "#/definitions/expressionMap"
-            }
-          }
+            "body": true
+          },
+          "additionalProperties": false
         },
         "actions": {
           "type": "array",
@@ -212,8 +211,15 @@
       "type": "object",
       "description": "A map of names to runtime expressions.",
       "additionalProperties": {
-        "type": "string",
-        "description": "A runtime expression."
+        "type": [
+          "string",
+          "boolean",
+          "object",
+          "array",
+          "number",
+          "null"
+        ],
+        "description": "A runtime expression or raw value."
       }
     },
     "schema": {
