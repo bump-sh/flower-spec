@@ -27,6 +27,8 @@ flows:
           body:
             previous_url: "$inputs.left_url"
             url: "$inputs.right_url"
+          headers:
+            X-CONSTANT: 3
         outputs:
           id: $response.body.id
 
@@ -42,6 +44,21 @@ flows:
             do: retry
             wait: 2
           - do: next
+
+      - id: create_diff_raw_body
+        description: With a raw body
+        request:
+          method: POST
+          url: https://bump.sh/api/v1/diffs
+          body: |
+            {
+              "previous_url": "{$inputs.left_url}",
+              "url": "{$inputs.right_url}"
+            }
+          headers:
+            X-CONSTANT: 3
+        outputs:
+          id: $response.body.id
 
     outputs:
       breaking: $steps.get_diff.outputs.breaking
