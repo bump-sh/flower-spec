@@ -16,7 +16,7 @@ You can find the current version of the specification JSON Schema at:
 ## Notable _benefits_ compared to Arazzo
 
 - Flower takes a “no dependency” approach by not knowing about
-  OpenAPI. It needs the API urls and methods declared in a flower
+  OpenAPI. It needs the API urls and methods declared in a Flower
   definition directly.
 - Arazzo's `successCriteria` / `onFailure` / `onSuccess` are
   simplified in a single list of `actions`. Each `action` object lets
