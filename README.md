@@ -10,8 +10,8 @@ start defining an API workflow from scratch, without any openapi
 files.
 
 You can find the current version of the specification JSON Schema at:
-- ..No published HTML page for now...
 - [`specification/v0/schema.json`](specification/v0/schema.json)
+- ...No published HTML page for now sorry!...
 
 ## Notable _benefits_ compared to Arazzo
 
