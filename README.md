@@ -1,7 +1,7 @@
 # Flower specification
 
 The _Flower_ specification is published by [Bump.sh](https://bump.sh)
-and built to simplify defining API workflows. 
+and built to simplify defining API workflows.
 
 The specification is currently only used internally @bump.sh, fully
 inspired by [Arazzo](https://spec.openapis.org/arazzo/latest.html) but
@@ -10,8 +10,30 @@ start defining an API workflow from scratch, without any openapi
 files.
 
 You can find the current version of the specification JSON Schema at:
-- ..No published HTML page for now...
 - [`specification/v0/schema.json`](specification/v0/schema.json)
+- ...No published HTML page for now sorry!...
+
+## Notable _benefits_ compared to Arazzo
+
+- Flower takes a “no dependency” approach by not knowing about
+  OpenAPI. It needs the API urls and methods declared in a Flower
+  definition directly, allowing you to write workflows using API not
+  exposing an OpenAPI file.
+- Arazzo's `successCriteria` / `onFailure` / `onSuccess` are
+  simplified in a single list of `actions`. Each `action` object lets
+  you chose between `next` (go to next step), `retry` (retry current
+  step), `goto` (go to a previous or a future step) and `end` actions
+  conditionally based on their optional `condition` runtime
+  expression. By default Flower specifies a `next` action when no
+  actions are declared within a step.
+
+## Notable _limitations_ compared to Arazzo
+
+- Arazzo's **`step.parameters[in=path|cookie]`** do not have a Flower
+  equivalent yet.
+- Flower does not support referenced workflows within a **`step`** (or
+  **`action`**) yet. Meaning you can't use a whole defined workflow
+  within a `step` of another workflow.
 
 ## Ruby library
 
@@ -82,7 +104,7 @@ validator.pretty_errors
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/paulrbr/flower. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/paulrbr/flower/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/bump-sh/flower. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/bump-sh/flower/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -90,4 +112,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Flower project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/paulrbr/flower/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Flower project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/bump-sh/flower/blob/main/CODE_OF_CONDUCT.md).
