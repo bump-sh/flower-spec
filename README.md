@@ -29,7 +29,7 @@ You can find the current version of the specification JSON Schema at:
 
 ## Notable _limitations_ compared to Arazzo
 
-- Arazzo's **`step.parameters[in=path|cookie]`** do not have a Flower
+- Arazzo's **`step.parameters[in=cookie]`** do not have a Flower
   equivalent yet.
 - Flower does not support referenced workflows within a **`step`** (or
   **`action`**) yet. Meaning you can't use a whole defined workflow
