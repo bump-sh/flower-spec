@@ -1,28 +1,39 @@
 require "spec_helper"
 
-RSpec.describe Flower::Validator do
+RSpec.describe Flower::Arazzo::Validator do
   describe "#valid?" do
     it "validates a valid input file" do
-      Dir["examples/*.yml"].each do |filepath|
+      validated = []
+
+      Dir["examples/arazzo/*.json"].each do |filepath|
         definition = File.read(filepath)
+        validated << filepath
 
         expect(subject.valid?(definition)).to be(true)
       end
+
+      expect(validated).to contain_exactly(/wikimedia.json/)
     end
 
     it "validates an invalid input file" do
-      Dir["examples/invalid/*.yml"].each do |filepath|
+      validated = []
+
+      Dir["examples/arazzo/invalid/*.yml"].each do |filepath|
         definition = File.read(filepath)
+        validated << filepath
 
         expect(subject.valid?(definition)).to be(false)
       end
+
+      expect(validated).to contain_exactly(/missing-workflows.yml/)
     end
 
     it "validates an already parsed definition" do
       parsed_definition = {
-        flower: "0.1",
-        id: "hello",
-        flows: []
+        arazzo: "1.0.1",
+        info: {title: "Hello", version: "0"},
+        sourceDescriptions: [],
+        workflows: []
       }
 
       subject.valid?(parsed_definition, parse: false)
@@ -36,22 +47,11 @@ RSpec.describe Flower::Validator do
     end
 
     it "returns a list of prettyfied errors when an invalid input has been checked" do
-      definition = File.read("examples/invalid/test.yml")
+      definition = File.read("examples/arazzo/invalid/missing-workflows.yml")
 
       subject.valid?(definition)
 
-      expect(subject.pretty_errors).to include("property '/flower' is not one of: [\"0.1\"]")
-      expect(subject.pretty_errors).to include("root is missing required keys: id")
-    end
-
-    it "returns a list of prettyfied errors when an invalid action has been checked" do
-      definition = File.read("examples/invalid/actions.yml")
-
-      subject.valid?(definition)
-
-      ["next", "goto", "end", "retry"].each do |action_type|
-        expect(subject.pretty_errors).to include("property '/flows/0/steps/0/actions/0/do' is not: \"#{action_type}\"")
-      end
+      expect(subject.pretty_errors).to contain_exactly("root is missing required keys: workflows")
     end
   end
 end

@@ -1,0 +1,7 @@
+arazzo: 1.0.1
+info:
+  title: Invalid arazzo
+  version: 0.0.1
+sourceDescriptions:
+  - url: "./api.json"
+    name: my-api

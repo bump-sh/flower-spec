@@ -1,0 +1,128 @@
+{
+  "properties": {
+    "arazzo": {
+      "type": "string"
+    },
+    "components": {
+      "properties": {
+        "failureActions": {
+          "type": "object"
+        },
+        "inputs": {
+          "type": "object"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "successActions": {
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "info": {
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "version"
+      ],
+      "type": "object"
+    },
+    "sourceDescriptions": {
+      "items": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "url"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "workflows": {
+      "items": {
+        "properties": {
+          "dependsOn": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "description": {
+            "type": "string"
+          },
+          "failureActions": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "inputs": {
+            "type": "object"
+          },
+          "outputs": {
+            "type": "object"
+          },
+          "parameters": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "steps": {
+            "items": {
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "successActions": {
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "workflowId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflowId",
+          "steps"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "arazzo",
+    "info",
+    "sourceDescriptions",
+    "workflows"
+  ],
+  "type": "object"
+}

@@ -11,11 +11,11 @@ module Flower
     JSON_SCHEMA_SPEC_PATH = "specification/json-schema-7/schema.json"
     JSON_SCHEMA = JSON.parse(File.read("#{GEM_ROOT}/#{JSON_SCHEMA_SPEC_PATH}")).freeze
 
-    def initialize
+    def initialize(schema = SCHEMA, json_schema = JSON_SCHEMA)
       @validator = JSONSchemer.schema(
-        SCHEMA,
+        schema,
         ref_resolver: {
-          URI("http://json-schema.org/draft-07/schema") => JSON_SCHEMA
+          URI("http://json-schema.org/draft-07/schema") => json_schema
         }.to_proc
       )
       @errors = []
