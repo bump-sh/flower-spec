@@ -116,9 +116,6 @@
       "type": "object",
       "required": ["do"],
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "when": {
           "type": "string",
           "description": "A runtime expression conditioning this action"
